@@ -1,0 +1,114 @@
+openapi: 3.0.0
+info:
+  description: "Bitmark File Courier Service"
+  version: "0.1.0"
+  title: "Bitmark File Courier Service"
+servers:
+- url: http://127.0.0.1:3000
+tags:
+- name: "File"
+paths:
+  /encrypt:
+    post:
+      security:
+        - bearerAuth: []
+      tags:
+      - "File"
+      summary: "Upload encrypted file in base64 to get envelope"
+      description: ""
+      requestBody:
+        description: "" 
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                file_64:
+                  type: string
+                  format: string
+                  default: "base64_string"
+                  example: "base64_string"
+      responses:
+        200:
+          description: "successful operation"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/encrypt_ok"
+  /decrypt:
+    post:
+      security:
+        - bearerAuth: []
+      tags:
+      - "File"
+      summary: "Decrypted envelope to file with public key and encrypted private key"
+      description: ""
+      requestBody:
+        description: "" 
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                publicKey:
+                  type: string
+                  format: string
+                  default: "gi6OufVV5lov1vX3/Yx7ftiAH9RoV/8Oqlv6oibdGXo="
+                  example: "gi6OufVV5lov1vX3/Yx7ftiAH9RoV/8Oqlv6oibdGXo="
+                dataKey:
+                  type: string
+                  format: string
+                  default: "MxuJmmYIEshQRk9mAqhlv6Dv5fRoMVtUk60HfA/0/6MEB5+blyAYzx2g6qHSRrPDhth/9bAW5Ssi/grjgOV3i8IpQe9LoCs1"
+                  example: "MxuJmmYIEshQRk9mAqhlv6Dv5fRoMVtUk60HfA/0/6MEB5+blyAYzx2g6qHSRrPDhth/9bAW5Ssi/grjgOV3i8IpQe9LoCs1"
+                encryptedFile:
+                  type: string
+                  format: string
+                  default: "/Kkv/zlCQiEzEqpqNdrEe1XIgMw6zD127i3sOQCANYEiQ5ClQtUN0IVaHjm7rYqtIb3FPw=="
+                  example: "/Kkv/zlCQiEzEqpqNdrEe1XIgMw6zD127i3sOQCANYEiQ5ClQtUN0IVaHjm7rYqtIb3FPw=="
+      responses:
+        200:
+          description: "successful operation"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/encrypt_ok"
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT 
+  schemas:
+    encrypt_ok:
+      type: object
+      properties:
+        status:
+          type: boolean
+          example: true
+        code:
+          type: integer
+          example: 200
+        data:
+          type: object
+          properties:
+            publicKey:
+              type: string
+              example: "gi6OufVV5lov1vX3/Yx7ftiAH9RoV/8Oqlv6oibdGXo="
+            dataKey:
+              type: string
+              example: "MxuJmmYIEshQRk9mAqhlv6Dv5fRoMVtUk60HfA/0/6MEB5+blyAYzx2g6qHSRrPDhth/9bAW5Ssi/grjgOV3i8IpQe9LoCs1"
+            encryptedFile:
+              type: string
+              example: "/Kkv/zlCQiEzEqpqNdrEe1XIgMw6zD127i3sOQCANYEiQ5ClQtUN0IVaHjm7rYqtIb3FPw=="
+    decrypt_ok:
+      type: object
+      properties:
+        status:
+          type: boolean
+          example: true
+        code:
+          type: integer
+          example: 200
+        data:
+          type: string
+          example: "your file_base64"
