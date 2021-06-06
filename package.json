@@ -5,7 +5,8 @@
   "scripts": {
     "lint": "eslint --fix './**/*.js'",
     "dev": "nodemon --exec node ./server.js",
-    "start": "pm2-runtime ecosystem.config.js --env production"
+    "start": "pm2-runtime ecosystem.config.js --env production",
+    "test": "nyc mocha --require @babel/register --recursive test/**/*.test.js --exit"
   },
   "dependencies": {
     "@babel/core": "^7.10.4",
@@ -15,6 +16,7 @@
     "@babel/preset-env": "^7.10.4",
     "babel-cli": "^6.26.0",
     "babel-polyfill": "^6.26.0",
+    "chai": "^4.3.4",
     "cookie-parser": "~1.4.3",
     "cors": "^2.8.5",
     "debug": "~2.6.9",
@@ -25,12 +27,15 @@
     "http-errors": "~1.6.2",
     "libsodium-wrappers": "^0.7.9",
     "lodash": "^4.17.15",
+    "mocha": "^8.4.0",
     "moment": "^2.24.0",
     "morgan": "^1.10.0",
     "nodemailer": "^6.4.8",
+    "nyc": "^15.1.0",
     "pm2": "^4.3.1",
     "request": "^2.88.2",
     "request-promise": "^4.2.5",
+    "sinon": "^11.1.1",
     "swagger-ui-express": "^4.1.6",
     "tweetnacl": "^1.0.3",
     "tweetnacl-util": "^0.15.1",
@@ -38,6 +43,8 @@
     "yamljs": "^0.3.0"
   },
   "devDependencies": {
+    "@babel/polyfill": "^7.12.1",
+    "@babel/register": "^7.13.16",
     "eslint": "^7.15.0",
     "eslint-plugin-prettier": "^3.1.3",
     "nodemon": "^2.0.6",

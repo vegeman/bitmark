@@ -1,0 +1,86 @@
+import '@babel/polyfill'
+import sinon from 'sinon'
+import chai from 'chai'
+import file from '../../api/file.js'
+const expect = chai.expect
+const reqBase = {
+  query: {},
+  params: {}
+}
+const mockResponse = () => {
+  const res = {}
+  res.status = sinon.stub().returns(res)
+  res.send = sinon.stub().returns(res)
+  return res
+}
+
+describe('File service test', () => {
+  it('Post a base64 file to encrypt', async() => {
+    const res = mockResponse()
+    const req = JSON.parse(JSON.stringify(reqBase))
+    req.body = {
+      senderUser: 'sender',
+      recipientUser: 'recipient',
+      senderSecrectKey: 'KOXbVu5/NBY6hf/B82pmdByEcR8HapWOW3Naau+FkKg=',
+      file64: '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Y/9VVVX/XV1d/4CAgP+BgYH/rKys/8bGxv/T09P/09PT/9PT0//T09P/09PT/9PT0//Q1tb/e4rL/1Bi0/9AU97/P1Pc/z9T3f85Utb/OlDS/zpP1f85Ttb/PFLf/z1T3f89U9v/OlXa/1trz/+nr87/09PT/9PT0//U1NT/h4eH/3Jycv9/f3//s7Oz/7Kysv/IyMj/09PT/9PT0//T09P/09PT/9PT0//T09P/09PT/9DT0v/R1NP/mKbh/1xw7P9Ycen/VG7y/0Rb4P86T9H/Ok/S/zlN1f9QZO//VnDy/1dy6/9YceT/xsra/9HT0v/T09P/09PT/9PT0//T09P/09PT/9PT0//T09P/09PT/9PT0//T09P/09PT/9PT0//T09P/09PT/9PT0//T09P/0tPT/9HT0//M0dX/yM3a/8DM4f9keOv/VG31/0hg6v86TdT/O03V/zpO1P90idX/xM7c/8bM2f/R09L/0tPS/9PT0//T09P/09PT/9PT0//T09P/09PT/9PT0//T09P/09PT/9PT0//T09P/09PT/9PT0//T09P/09PT/9PT0//T09P/0tPS/9HT0v/T09P/0tTU/7C23f90iur/SGPt/ztO0P89T9H/hpLS/7e70f/P1dX/0dPT/9LT0//T09P/09PT/9PT0//T09P/09PT/9PT0//T09P/09PT/9PT0//T09P/09PT/9PT0//T09P/09PT/9PT0//T09P/09PT/9PT0//T09P/09PT/9PT0//T09P/0dTS/6Kv4P98j97/d4bN/3aGzf+8v9j/0tXR/9HT0v/T09P/09PT/9PT0//T09P/09PT/9PT0//T09P/09PT/9PT0//T09P/09PT/9PT0//T09P/09PT/9PT0//T09P/09PT/9PT0//T09P/09PT/9PT0//T09P/09PT/9PT0//S09L/0tPT/9LS0//S1NP/0dTT/9PU0//S09L/0tPS/9PT0//T09P/09PT/9PT0//T09P/09PT/9PT0//T09P/09PT/9PT0//T09P/09PT/9PT0//T09P/09PT/9PT0//T09P/09PT/9PT0//T09P/09PT/9PT0//T09P/09PT/9PT0//T09P/09PT/9LT0v/R09L/0tPS/9PT0v/T09P/09PT/9PT0//T09P/09PT/9PT0//T09P/09PT/9PT0//T09P/09PT/9PT0//T09P/09PT/9PT0//T09P/09PT/9PT0//T09P/09PT/9PT0//T09P/09PT/9PT0//T09P/09PT/9PT0//T09P/09PT/9PT0//T09P/09PT/9PT0//T09P/09PT/9PT0//T09P/09PT/9PT0//T09P/09PT/9PT0//T09P/09PT/9PT0//T09P/09PT/9PT0//T09P/09PT/9PT0//T09P/09PT/9PT0//T09P/09PT/9PT0//T09P/09PT/9PT0//T09P/09PT/9PT0//T09P/09PT/9PT0//T09P/09PT/9PT0//T09P/09PT/9PT0//T09P/09PT/9PT0//T09P/09PT/9PT0//T09P/09PT/9PT0//T09P/09PT/9PT0//T09P/09PT/9PT0//T09P/09PT/9PT0//T09P/09PT/9PT0//T09P/09PT/9PT0//T09P/09PT/9PT0//T09P/09PT/9PT0//T09P/09PT/9PT0//T09P/09PT/9PT0//T09P/09PT/9PT0//T09P/09PT/9PT0//T09P/09PT/9PT0//T09P/09PT/9PT0//T09P/09PT/9PT0//T09P/09PT/9PT0//T09P/09PT/9PT0//T09P/09PT/9PT0//T09P/09PT/9PT0//T09P/09PT/9PT0//T09P/09PT/9PT0//T09P/09PT/9PT0//T09P/09PT/9PT0//T09P/AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA='
+    }
+    await file.encrypt(req, res)
+    expect(res.send.firstCall.args[0].status).to.be.true
+  })
+  it('Post a base64 file to encrypt with typo secrect key', async() => {
+    const res = mockResponse()
+    const req = JSON.parse(JSON.stringify(reqBase))
+    req.body = {
+      senderUser: 'sender',
+      recipientUser: 'recipient',
+      senderSecrectKey: 'KOXbVu5/NBY6hf/B82pmdByEcR8HapWOW3Naau+FkKq=',
+      file64: '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Y/9VVVX/XV1d/4CAgP+BgYH/rKys/8bGxv/T09P/09PT/9PT0//T09P/09PT/9PT0//Q1tb/e4rL/1Bi0/9AU97/P1Pc/z9T3f85Utb/OlDS/zpP1f85Ttb/PFLf/z1T3f89U9v/OlXa/1trz/+nr87/09PT/9PT0//U1NT/h4eH/3Jycv9/f3//s7Oz/7Kysv/IyMj/09PT/9PT0//T09P/09PT/9PT0//T09P/09PT/9DT0v/R1NP/mKbh/1xw7P9Ycen/VG7y/0Rb4P86T9H/Ok/S/zlN1f9QZO//VnDy/1dy6/9YceT/xsra/9HT0v/T09P/09PT/9PT0//T09P/09PT/9PT0//T09P/09PT/9PT0//T09P/09PT/9PT0//T09P/09PT/9PT0//T09P/0tPT/9HT0//M0dX/yM3a/8DM4f9keOv/VG31/0hg6v86TdT/O03V/zpO1P90idX/xM7c/8bM2f/R09L/0tPS/9PT0//T09P/09PT/9PT0//T09P/09PT/9PT0//T09P/09PT/9PT0//T09P/09PT/9PT0//T09P/09PT/9PT0//T09P/0tPS/9HT0v/T09P/0tTU/7C23f90iur/SGPt/ztO0P89T9H/hpLS/7e70f/P1dX/0dPT/9LT0//T09P/09PT/9PT0//T09P/09PT/9PT0//T09P/09PT/9PT0//T09P/09PT/9PT0//T09P/09PT/9PT0//T09P/09PT/9PT0//T09P/09PT/9PT0//T09P/0dTS/6Kv4P98j97/d4bN/3aGzf+8v9j/0tXR/9HT0v/T09P/09PT/9PT0//T09P/09PT/9PT0//T09P/09PT/9PT0//T09P/09PT/9PT0//T09P/09PT/9PT0//T09P/09PT/9PT0//T09P/09PT/9PT0//T09P/09PT/9PT0//S09L/0tPT/9LS0//S1NP/0dTT/9PU0//S09L/0tPS/9PT0//T09P/09PT/9PT0//T09P/09PT/9PT0//T09P/09PT/9PT0//T09P/09PT/9PT0//T09P/09PT/9PT0//T09P/09PT/9PT0//T09P/09PT/9PT0//T09P/09PT/9PT0//T09P/09PT/9LT0v/R09L/0tPS/9PT0v/T09P/09PT/9PT0//T09P/09PT/9PT0//T09P/09PT/9PT0//T09P/09PT/9PT0//T09P/09PT/9PT0//T09P/09PT/9PT0//T09P/09PT/9PT0//T09P/09PT/9PT0//T09P/09PT/9PT0//T09P/09PT/9PT0//T09P/09PT/9PT0//T09P/09PT/9PT0//T09P/09PT/9PT0//T09P/09PT/9PT0//T09P/09PT/9PT0//T09P/09PT/9PT0//T09P/09PT/9PT0//T09P/09PT/9PT0//T09P/09PT/9PT0//T09P/09PT/9PT0//T09P/09PT/9PT0//T09P/09PT/9PT0//T09P/09PT/9PT0//T09P/09PT/9PT0//T09P/09PT/9PT0//T09P/09PT/9PT0//T09P/09PT/9PT0//T09P/09PT/9PT0//T09P/09PT/9PT0//T09P/09PT/9PT0//T09P/09PT/9PT0//T09P/09PT/9PT0//T09P/09PT/9PT0//T09P/09PT/9PT0//T09P/09PT/9PT0//T09P/09PT/9PT0//T09P/09PT/9PT0//T09P/09PT/9PT0//T09P/09PT/9PT0//T09P/09PT/9PT0//T09P/09PT/9PT0//T09P/09PT/9PT0//T09P/09PT/9PT0//T09P/09PT/9PT0//T09P/09PT/9PT0//T09P/09PT/9PT0//T09P/09PT/9PT0//T09P/09PT/9PT0//T09P/09PT/9PT0//T09P/AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA='
+    }
+    await file.encrypt(req, res)
+    expect(res.send.firstCall.args[0].status).to.be.false
+  })
+  it('Download decrypted file with secrect key', async() => {
+    const res = mockResponse()
+    const req = JSON.parse(JSON.stringify(reqBase))
+    req.body = {
+      recipientUser: 'recipient',
+      recipientSecrectKey: 'wu3YDmMkx52rpRLen1nvTRLZrPEe/0xAszhqBuR0DV0=',
+      envelopeId: 1
+    }
+    await file.decrypt(req, res)
+    expect(res.send.firstCall.args[0].status).to.be.true
+  })
+  it('Download decrypted file with wrong secrect key', async() => {
+    const res = mockResponse()
+    const req = JSON.parse(JSON.stringify(reqBase))
+    req.body = {
+      recipientUser: 'recipient',
+      recipientSecrectKey: 'wu3YDmMkx52rpRLen1nvTRLZrPEe/0xAszhqBuR0DV0=++',
+      envelopeId: 1
+    }
+    await file.decrypt(req, res)
+    expect(res.send.firstCall.args[0].status).to.be.false
+  })
+  it('Download decrypted file with wrong user', async() => {
+    const res = mockResponse()
+    const req = JSON.parse(JSON.stringify(reqBase))
+    req.body = {
+      recipientUser: 'sender',
+      recipientSecrectKey: 'wu3YDmMkx52rpRLen1nvTRLZrPEe/0xAszhqBuR0DV0=',
+      envelopeId: 1
+    }
+    await file.decrypt(req, res)
+    expect(res.send.firstCall.args[0].status).to.be.false
+  })
+  it('Download decrypted file with wrong id', async() => {
+    const res = mockResponse()
+    const req = JSON.parse(JSON.stringify(reqBase))
+    req.body = {
+      recipientUser: 'recipient',
+      recipientSecrectKey: 'wu3YDmMkx52rpRLen1nvTRLZrPEe/0xAszhqBuR0DV0=',
+      envelopeId: 19
+    }
+    await file.decrypt(req, res)
+    expect(res.send.firstCall.args[0].status).to.be.false
+  })
+})

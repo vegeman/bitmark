@@ -50,9 +50,4 @@ app.use(function(err, req, res, next) {
   res.render('error')
 })
 
-logger.error('This is a message.')
-logger.debug('This is a message.')
-logger.warn('This is a message.')
-logger.info('This is a message.')
-
 module.exports = app
