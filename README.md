@@ -1,8 +1,6 @@
 # File Service Beta
 
 > This project partially integrated some front end duty into this single service
-- Auto-generated Table of Content
-[ToC]
 
 ## :memo: Where do I start?
 
