@@ -1,6 +1,6 @@
 # File Service Beta
 
-> This project partially integrated some front end duty into this single service
+> Encryption practice
 
 ## :memo: Where do I start?
 
